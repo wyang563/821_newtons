@@ -1,3 +1,5 @@
+from visualizer import plot_polynomial
+
 class Polynomial:
     def __init__(self, coefficients):
         self.coefficients = coefficients
@@ -34,11 +36,12 @@ def two_points_method(polynomial, x1, x2, tolerance=1e-6, max_iterations=100):
         x_intercept = x1 - y1 * (x2 - x1) / (y2 - y1)
         x1, x2 = x2, x_intercept
     raise ValueError(f"Two points method did not converge after {max_iterations} iterations.")
-
 # Example usage:
 if __name__ == "__main__":
     # Create a polynomial: 2x^3 - 4x^2 + 3x - 6
     p = Polynomial([6, -3, 4, -2])
+
+    plot_polynomial(p, -10, 10)
 
     try:
         root = newton_method(p, initial_guess=-1.0)[-1]
