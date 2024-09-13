@@ -40,24 +40,24 @@ def two_points_method(polynomial, x1, x2, tolerance=1e-6, max_iterations=100):
     for _ in range(max_iterations):
         y1 = polynomial(x1)
         y2 = polynomial(x2)
-        guesses.append((x1, x_intercept))
+        guesses.append((x1, y1))
         # if abs(y2) < tolerance:
         #     return guesses
         # find x intercept of line through (x1, y1) and (x2, y2)
         x_intercept = fsub(x1, fmul(y1, fdiv(fsub(x2, x1), fsub(y2, y1))))
-        x_intercept = x1 - y1 * (x2 - x1) / (y2 - y1)
         x1, x2 = x2, x_intercept
-    raise ValueError(f"Two points method did not converge after {max_iterations} iterations.")
+    return guesses
 
 # Example usage:
 if __name__ == "__main__":
     # Create a polynomial: 2x^3 - 4x^2 + 3x - 6
     # p = Polynomial([6, -3, 4, -2])
-    p = Polynomial([-1, 0, 2, 0, 4, -5, 1, 12, 0, 15])
-    # p = Polynomial([-0, 0, 0, 1])
+    # p = Polynomial([-1, 0, 2, 0, 4, -5, 1, 12, 0, 15])
+    p = Polynomial([-1, 0, 1])
 
     try:
-        guesses = newton_method(p, initial_guess=2.0, max_iterations=300)
+        # guesses = newton_method(p, initial_guess=2.0, max_iterations=300)
+        guesses = two_points_method(p, 2, 10, max_iterations=10)
         print("Guesses: ")
         for x, fx in guesses:
             # print('x: ' + str(float(x)))
